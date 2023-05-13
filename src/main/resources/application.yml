@@ -1,0 +1,7 @@
+logging:
+  level:
+    org:
+      springframework:
+        security: TRACE
+server:
+  port: 80
