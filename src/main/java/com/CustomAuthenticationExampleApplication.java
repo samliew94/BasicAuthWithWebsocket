@@ -28,6 +28,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.messaging.access.intercept.MessageMatcherDelegatingAuthorizationManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -133,15 +134,15 @@ class UserController{
 		String username = (String) map.get("username");
 		String password = (String) map.get("password");
 		
-//		Authentication token = new UsernamePasswordAuthenticationToken(username, password);
-//		authManager.authenticate(token);
-////		
-////		// this is what allows server to subsequently identify user.
-//		HttpSession session = request.getSession(true);
-//		session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
+		Authentication token = new UsernamePasswordAuthenticationToken(username, password);
+		authManager.authenticate(token);
+//		
+//		// this is what allows server to subsequently identify user.
+		HttpSession session = request.getSession(true);
+		session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
 		
 		// can be shorten to 
-		request.login(username,password);
+//		request.login(username,password);
 		
 		return ResponseEntity.ok("login successful");
 	}
